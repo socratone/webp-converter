@@ -38,6 +38,7 @@ Vue.component('format', {
         이미지를 드래그해서 올려주세요.
       </div>
       <button 
+        id="delete-button"
         class="button button--delete" 
         v-on:click="deleteImage"
         v-if="url"
@@ -60,6 +61,14 @@ Vue.component('format', {
     }
   },
   methods: {
+    clearImageDataAfter: function (ms) {
+      setTimeout(() => {
+        this.url = '';
+        this.fileName = '';
+        this.filePath = '';
+        document.getElementById('file').value = '';
+      }, ms);
+    },
     selectImageFile: function ({ target }) {
       if (target.files && target.files[0]) {
         this.fileName = target.files[0].name;
@@ -96,12 +105,7 @@ Vue.component('format', {
     },
     deleteImage: function ({ target }) {
       target.style.transform = 'scale(0)';
-      setTimeout(() => {
-        this.url = '';
-        this.fileName = '';
-        this.filePath = '';
-        document.getElementById('file').value = '';
-      }, 300);
+      this.clearImageDataAfter(300);
     },
     submit: function () {
       if (!this.url || !this.fileName || !this.filePath) {
@@ -114,7 +118,12 @@ Vue.component('format', {
 
       ipcRenderer.on('convert-result', (event, arg) => {
         if (arg.error) alert(arg.error);
-        else console.log('Images optimized')
+        else {
+          console.log('Images optimized');
+          const deleteButton = document.getElementById('delete-button');
+          deleteButton.style.transform = 'scale(0)';
+          this.clearImageDataAfter(300);
+        }
       });
 
       ipcRenderer.send('image-file-converter', { 
