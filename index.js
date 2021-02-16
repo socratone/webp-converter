@@ -8,7 +8,7 @@ Vue.component('format', {
           <h2>format</h2>
           <span>
             <input type="radio" id="webp" checked />
-            <label for="webp">wepb</label>
+            <label for="webp">WEBP</label>
           </span>
         </div>
         <div>
