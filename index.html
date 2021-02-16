@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image File Converter</title>
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <header class="header">
+      <nav>
+        <ul class="header__list">
+          <li v-on:click="select('format')">파일 형식</li>
+          <li v-on:click="select('size')">파일 크기</li>
+        </ul>
+      </nav>
+    </header>
+    <main v-if="tab === 'format'">
+      <h1>format</h1>
+      <!-- {{ message }} -->
+    </main>
+    <main v-else-if="tab === 'size'">
+      <h1>size</h1>
+      <!-- {{ message }} -->
+    </main>
+  </div>
+  <script src="index.js"></script>
+</body>
+</html>
