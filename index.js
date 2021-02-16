@@ -3,7 +3,6 @@ const { ipcRenderer } = require('electron');
 Vue.component('format', {
   template: `
     <main>
-      <h1>format</h1>
       <h2>target</h2>
       <input type="radio" id="webp" checked />
       <label for="webp">wepb</label>
@@ -18,7 +17,7 @@ Vue.component('format', {
       />
       <h2>preview</h2>
       <img v-if="url" v-bind:src="url" alt="preview image" />
-      <button v-on:click="submit">변환</button>
+      <button class="convert-button" v-on:click="submit">변 환</button>
     </main>`,
   data: function () {
     return {

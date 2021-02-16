@@ -41,12 +41,17 @@ ul {
   list-style: none;
 }
 
+button {
+  outline: none;
+}
+
 /* header */
 
 .header {
   background: dodgerblue;
   color: aliceblue;
   height: 4rem;
+  box-shadow: 0 4px 14px 0 rgb(0 118 255 / 39%);
 }
 
 .header__nav {
@@ -64,4 +69,27 @@ ul {
   align-items: center;
   height: 100%;
   cursor: pointer;
+}
+
+/* 버튼 */
+
+.convert-button {
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+  width: 6rem;
+  height: 6rem;
+  border-radius: 100%;
+  border: 0;
+  cursor: pointer;
+  background: dodgerblue;
+  color: aliceblue;
+  transition: all 0.3s;
+  font-size: 1.6rem;
+  box-shadow: 0 4px 14px 0 rgb(0 118 255 / 39%);
+}
+
+.convert-button:hover {
+  background: deepskyblue;
+  color: aliceblue;
 }
