@@ -14,14 +14,13 @@
       <nav class="header__nav">
         <ul class="header__list">
           <li v-on:click="select('format')">WEBP 변환</li>
-          <li v-on:click="select('size')">파일 크기</li>
+          <li v-on:click="select('about')">ABOUT</li>
         </ul>
       </nav>
     </header>
     
     <format v-if="tab === 'format'"></format>
-    
-    <main id="size" v-else-if="tab === 'size'"></main>
+    <about v-else-if="tab === 'about'"></about>
   </div>
   <script src="index.js"></script>
 </body>

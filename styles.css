@@ -32,6 +32,10 @@ h2 {
   font-size: 1.5rem;
 }
 
+a {
+  color: dodgerblue;
+}
+
 img {
   display: block;
 }
