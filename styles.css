@@ -134,23 +134,37 @@ button {
 
 /* 버튼 */
 
-.convert-button {
+.button {
   position: fixed;
-  right: 2rem;
-  bottom: 2rem;
   width: 6rem;
   height: 6rem;
   border-radius: 100%;
   border: 0;
   cursor: pointer;
-  background: dodgerblue;
-  color: aliceblue;
   transition: all 0.3s;
   font-size: 1.6rem;
-  box-shadow: 0 4px 14px 0 rgb(0 118 255 / 39%);
 }
 
-.convert-button:hover {
-  background: deepskyblue;
+.button--convert {
+  right: 2rem;
+  bottom: 2rem;
+  box-shadow: 0 4px 14px 0 rgb(0 118 255 / 39%);
+  background: dodgerblue;
   color: aliceblue;
+}
+
+.button--convert:hover {
+  background: deepskyblue;
+}
+
+.button--delete {
+  left: 2rem;
+  bottom: 2rem;
+  box-shadow: 0 4px 14px 0 rgb(255 0 191 / 39%);
+  background: deeppink;
+  color: aliceblue;
+}
+
+.button--delete:hover {
+  background: rgb(255, 84, 169);
 }

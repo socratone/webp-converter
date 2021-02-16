@@ -37,7 +37,19 @@ Vue.component('format', {
       >
         이미지를 드래그해서 올려주세요.
       </div>
-      <button class="convert-button" v-on:click="submit">변 환</button>
+      <button 
+        class="button button--delete" 
+        v-on:click="deleteImage"
+        v-if="url"
+      >
+        지우기
+      </button>
+      <button 
+        class="button button--convert" 
+        v-on:click="submit"
+      >
+        변 환
+      </button>
     </main>`,
   data: function () {
     return {
@@ -81,6 +93,12 @@ Vue.component('format', {
     dragLeaveImage: function ({ target }) {
       target.style.background = '';
       target.style.border = '';
+    },
+    deleteImage: function () {
+      this.url = '';
+      this.fileName = '';
+      this.filePath = '';
+      document.getElementById('file').value = '';
     },
     submit: function () {
       if (!this.url || !this.fileName || !this.filePath) {
