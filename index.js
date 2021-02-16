@@ -3,20 +3,31 @@ const { ipcRenderer } = require('electron');
 Vue.component('format', {
   template: `
     <main>
-      <h2>target</h2>
-      <input type="radio" id="webp" checked />
-      <label for="webp">wepb</label>
-      <h2>quality</h2>
-      <input type="number" v-model.number="quality" />
-      <h2>image file</h2>
-      <input 
-        id="file" 
-        type="file" 
-        accept="image/png, image/jpeg"
-        v-on:change="selectImageFile"
-      />
+      <header class="main__header">
+        <div>
+          <h2>format</h2>
+          <span>
+            <input type="radio" id="webp" checked />
+            <label for="webp">wepb</label>
+          </span>
+        </div>
+        <div>
+          <h2>quality</h2>
+          <input type="number" v-model.number="quality" />
+        </div>
+        <div>
+          <h2>image file</h2>
+          <input
+            id="file"
+            type="file"
+            accept="image/png, image/jpeg"
+            v-on:change="selectImageFile"
+          />
+        </div>
+      </header>
       <h2>preview</h2>
-      <img v-if="url" v-bind:src="url" alt="preview image" />
+      <img v-if="url" v-bind:src="url" class="main__image" alt="preview image" />
+      <div v-else class="main__blank-image"></div>
       <button class="convert-button" v-on:click="submit">변 환</button>
     </main>`,
   data: function () {
