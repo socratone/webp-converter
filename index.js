@@ -30,9 +30,10 @@ Vue.component('format', {
       <div 
         v-else 
         class="main__blank-image" 
-        v-on:drop="dropImageFile" 
-        @dragenter.prevent 
+        @drop="dropImageFile" 
+        @dragenter.prevent="dragEnterImage"
         @dragover.prevent
+        @dragleave="dragLeaveImage"
       >
         이미지를 드래그해서 올려주세요.
       </div>
@@ -72,6 +73,14 @@ Vue.component('format', {
         this.url = target.result;
       }
       reader.readAsDataURL(files[0]);
+    },
+    dragEnterImage: function ({ target }) {
+      target.style.background = 'aliceblue';
+      target.style.border = '1px dashed dodgerblue';
+    },
+    dragLeaveImage: function ({ target }) {
+      target.style.background = '';
+      target.style.border = '';
     },
     submit: function () {
       if (!this.url || !this.fileName || !this.filePath) {
