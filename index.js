@@ -1,3 +1,5 @@
+const { ipcRenderer } = require('electron');
+
 Vue.component('format', {
   template: `
     <main>
@@ -41,27 +43,17 @@ Vue.component('format', {
       }
     }, 
     submit: function () {
-      if (!this.url) return alert('파일을 선택해주세요.')
+      if (!this.url) return alert('파일을 선택해주세요.');
 
-      const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
+      ipcRenderer.on('convert-result', (event, arg) => {
+        if (arg.error) alert(arg.error);
+        else console.log('Images optimized')
+      });
 
-      const raw = JSON.stringify({ 
+      ipcRenderer.send('image-file-converter', { 
         path: this.filePath,
         quality: this.quality
       });
-
-      const requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: raw,
-        redirect: 'follow'
-      };
-
-      fetch("http://localhost:4000/format", requestOptions)
-        .then(response => response.text())
-        .then(result => console.log(result))
-        .catch(error => console.log('error', error));
     }
   }
 });

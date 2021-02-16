@@ -4,16 +4,12 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
-    "server": "nodemon server.js"
+    "start": "electron ."
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
     "imagemin": "^7.0.1",
     "imagemin-webp": "^6.0.0"
   },
