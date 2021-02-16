@@ -123,10 +123,13 @@ button {
 }
 
 .main__blank-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: grey;
   border: 1px dashed grey;
   height: 50vw;
 }
-
 
 /* 버튼 */
 

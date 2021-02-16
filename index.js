@@ -27,7 +27,15 @@ Vue.component('format', {
       </header>
       <h2>preview</h2>
       <img v-if="url" v-bind:src="url" class="main__image" alt="preview image" />
-      <div v-else class="main__blank-image"></div>
+      <div 
+        v-else 
+        class="main__blank-image" 
+        v-on:drop="dropImageFile" 
+        @dragenter.prevent 
+        @dragover.prevent
+      >
+        이미지를 드래그해서 올려주세요.
+      </div>
       <button class="convert-button" v-on:click="submit">변 환</button>
     </main>`,
   data: function () {
@@ -42,7 +50,8 @@ Vue.component('format', {
     selectImageFile: function ({ target }) {
       if (target.files && target.files[0]) {
         this.fileName = target.files[0].name;
-        this.filePath = document.getElementById('file').files[0].path; // Electron에서만 접근 가능
+        this.filePath = target.files[0].path; // Electron에서만 접근 가능
+
         const reader = new FileReader();
         reader.onload = ({ target }) => {
           this.url = target.result;
@@ -52,10 +61,25 @@ Vue.component('format', {
         this.url = '';
       }
     }, 
+    dropImageFile: function (event) {
+      let files = event.dataTransfer.files;
+      this.fileName = files[0].name;
+      this.filePath = files[0].path;
+      document.getElementById('file').files = files;
+      
+      const reader = new FileReader();
+      reader.onload = ({ target }) => {
+        this.url = target.result;
+      }
+      reader.readAsDataURL(files[0]);
+    },
     submit: function () {
-      if (!this.url) return alert('파일을 선택해주세요.');
+      if (!this.url || !this.fileName || !this.filePath) {
+        return alert('파일을 선택해주세요.');
+      }
+
       if (this.quality < 0 || this.quality > 100) {
-        return alert('Quality는 0에서 100 사이의 값을 넣어주세요.')
+        return alert('Quality는 0에서 100 사이의 값을 넣어주세요.');
       }
 
       ipcRenderer.on('convert-result', (event, arg) => {
