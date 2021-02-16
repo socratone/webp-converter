@@ -35,7 +35,7 @@ Vue.component('format', {
       url: '',
       fileName: '',
       filePath: '',
-      quality: '75'
+      quality: 75
     }
   },
   methods: {
@@ -54,6 +54,9 @@ Vue.component('format', {
     }, 
     submit: function () {
       if (!this.url) return alert('파일을 선택해주세요.');
+      if (this.quality < 0 || this.quality > 100) {
+        return alert('Quality는 0에서 100 사이의 값을 넣어주세요.')
+      }
 
       ipcRenderer.on('convert-result', (event, arg) => {
         if (arg.error) alert(arg.error);
