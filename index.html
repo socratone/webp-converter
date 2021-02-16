@@ -19,10 +19,10 @@
         </ul>
       </nav>
     </header>
-    <main v-if="tab === 'format'">
-      <h1>format</h1>
-    </main>
-    <main v-else-if="tab === 'size'">
+    
+    <format v-if="tab === 'format'"></format>
+    
+    <main id="size" v-else-if="tab === 'size'">
       <h1>size</h1>
     </main>
   </div>

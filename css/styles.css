@@ -17,9 +17,17 @@ main {
   margin: 2rem;
 }
 
-h1 {
+h1,
+h2 {
   text-transform: uppercase;
+}
+
+h1 {
   font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 2rem;
 }
 
 ul {
