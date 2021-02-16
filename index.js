@@ -94,11 +94,14 @@ Vue.component('format', {
       target.style.background = '';
       target.style.border = '';
     },
-    deleteImage: function () {
-      this.url = '';
-      this.fileName = '';
-      this.filePath = '';
-      document.getElementById('file').value = '';
+    deleteImage: function ({ target }) {
+      target.style.transform = 'scale(0)';
+      setTimeout(() => {
+        this.url = '';
+        this.fileName = '';
+        this.filePath = '';
+        document.getElementById('file').value = '';
+      }, 300);
     },
     submit: function () {
       if (!this.url || !this.fileName || !this.filePath) {

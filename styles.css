@@ -145,6 +145,10 @@ button {
   font-size: 1.6rem;
 }
 
+button:hover {
+  transform: scale(1.1);
+}
+
 .button--convert {
   right: 2rem;
   bottom: 2rem;
