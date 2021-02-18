@@ -3,14 +3,20 @@ const imagemin = require('imagemin');
 const imageminWebp = require('imagemin-webp');
 
 ipcMain.on('image-file-converter', async (event, arg) => {
-  const { path, quality } = arg;
+  const { path, quality, width, height } = arg;
   const parentPath = path.substring(0, path.lastIndexOf('/'));
 
   try {
     await imagemin([path], {
       destination: parentPath,
       plugins: [
-        imageminWebp({ quality }) // number
+        imageminWebp({ 
+          quality, // number
+          resize: { 
+            width, // number
+            height // number
+          }
+        }) 
       ]
     });
     event.reply('convert-result', { message: 'ok' });
@@ -22,8 +28,8 @@ ipcMain.on('image-file-converter', async (event, arg) => {
 
 function createWindow () {
   const win = new BrowserWindow({ // 브라우저 창을 생성한다.
-    width: 800,
-    height: 600,
+    width: 900,
+    height: 630,
     webPreferences: {
       nodeIntegration: true
     }

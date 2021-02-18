@@ -16,6 +16,16 @@ Vue.component('format', {
           <input type="number" v-model.number="quality" />
         </div>
         <div>
+          <h2>width</h2>
+          <input 
+            class="widen"
+            type="number" 
+            v-model.number="width" 
+            v-on:change="handleWidthChange"
+            :disabled="width === 0"
+          />
+        </div>
+        <div>
           <h2>image file</h2>
           <input
             id="file"
@@ -26,7 +36,11 @@ Vue.component('format', {
         </div>
       </header>
       <h2>preview</h2>
-      <img v-if="url" v-bind:src="url" class="main__image" alt="preview image" />
+      <img 
+        v-if="url" 
+        v-bind:src="url" 
+        class="main__image" 
+        alt="preview image" />
       <div 
         v-else 
         class="main__blank-image" 
@@ -57,15 +71,25 @@ Vue.component('format', {
       url: '',
       fileName: '',
       filePath: '',
-      quality: 75
+      quality: 75,
+      width: 0,
+      height: 0
     }
   },
   methods: {
+    handleWidthChange: function ({ target }) {
+      this.width = target.value; // width data 입력
+      const image = document.querySelector('.main__image');
+      image.width = target.value; // preview 이미지 수정
+      this.height = image.height; // height data 입력
+    },
     clearImageDataAfter: function (ms) {
       setTimeout(() => {
         this.url = '';
         this.fileName = '';
         this.filePath = '';
+        this.width = 0;
+        this.height = 0;
         document.getElementById('file').value = '';
       }, ms);
     },
@@ -77,6 +101,11 @@ Vue.component('format', {
         const reader = new FileReader();
         reader.onload = ({ target }) => {
           this.url = target.result;
+          setTimeout(() => {
+            const image = document.querySelector('.main__image');
+            this.width = image.offsetWidth;
+            this.height = image.offsetHeight;
+          }, 0);
         }
         reader.readAsDataURL(target.files[0]);
       } else {
@@ -92,6 +121,11 @@ Vue.component('format', {
       const reader = new FileReader();
       reader.onload = ({ target }) => {
         this.url = target.result;
+        setTimeout(() => {
+          const image = document.querySelector('.main__image');
+          this.width = image.offsetWidth;
+          this.height = image.offsetHeight;
+        }, 0);
       }
       reader.readAsDataURL(files[0]);
     },
@@ -116,6 +150,8 @@ Vue.component('format', {
         return alert('Quality는 0에서 100 사이의 값을 넣어주세요.');
       }
 
+      if (this.width <= 0) return alert('Width는 0보다 커야 합니다.');
+
       ipcRenderer.on('convert-result', (event, arg) => {
         if (arg.error) alert(arg.error);
         else {
@@ -128,7 +164,9 @@ Vue.component('format', {
 
       ipcRenderer.send('image-file-converter', { 
         path: this.filePath,
-        quality: this.quality
+        quality: this.quality, 
+        width: this.width,
+        height: this.height
       });
     }
   }
@@ -156,46 +194,7 @@ Vue.component('about', {
           https://github.com/imagemin/imagemin-webp
         </a>
       </p>
-    </main>`,
-  data: function () {
-    return {
-      url: '',
-      fileName: '',
-      filePath: '',
-      quality: 75
-    }
-  },
-  methods: {
-    selectImageFile: function ({ target }) {
-      if (target.files && target.files[0]) {
-        this.fileName = target.files[0].name;
-        this.filePath = document.getElementById('file').files[0].path; // Electron에서만 접근 가능
-        const reader = new FileReader();
-        reader.onload = ({ target }) => {
-          this.url = target.result;
-        }
-        reader.readAsDataURL(target.files[0]);
-      } else {
-        this.url = '';
-      }
-    }, 
-    submit: function () {
-      if (!this.url) return alert('파일을 선택해주세요.');
-      if (this.quality < 0 || this.quality > 100) {
-        return alert('Quality는 0에서 100 사이의 값을 넣어주세요.')
-      }
-
-      ipcRenderer.on('convert-result', (event, arg) => {
-        if (arg.error) alert(arg.error);
-        else console.log('Images optimized')
-      });
-
-      ipcRenderer.send('image-file-converter', { 
-        path: this.filePath,
-        quality: this.quality
-      });
-    }
-  }
+    </main>`
 });
 
 const app = new Vue({
