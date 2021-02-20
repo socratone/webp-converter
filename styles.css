@@ -122,6 +122,7 @@ button {
 }
 
 .main__image {
+  box-shadow: white 0px 0px 0px 1px inset, grey 0px 0px 0px 1px;
 }
 
 .main__blank-image {
