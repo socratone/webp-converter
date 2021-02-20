@@ -176,6 +176,12 @@ Vue.component('about', {
   template: `
     <main>
       <h2>license</h2>
+      <p>vuejs :</p>
+      <p>
+        <a href="https://vuejs.org/" target="_blank">
+          https://vuejs.org/
+        </a>
+      </p>
       <p>electron :</p>
       <p>
         <a href="https://www.electronjs.org/" target="_blank">
